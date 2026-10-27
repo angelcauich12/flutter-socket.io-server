@@ -6,10 +6,10 @@ const Band = require('../models/band')
 
 const bands = new Bands();
 
-bands.addBand(new Band( 'Liran Roll'));
-bands.addBand(new Band( 'DLD'));
-bands.addBand(new Band( 'La gusana ciega'));
-bands.addBand(new Band( 'El haragán'));
+bands.addBand(new Band('Liran Roll'));
+bands.addBand(new Band('DLD'));
+bands.addBand(new Band('La gusana ciega'));
+bands.addBand(new Band('El haragán'));
 
 console.log(bands);
 
@@ -33,6 +33,24 @@ io.on('connection', client => {
         // console.log('New message!!!', payload)
         client.broadcast.emit('new-message', { message: 'HEY!!!', payload });
     });
+
+    client.on('vote-band', (payload) => {
+      
+        bands.voteBand(payload.id);
+        io.emit('active-bands', bands.getBands());
+    });
+
+    client.on('add-band', (payload) => {
+        const newBand = new Band(payload.name);
+        bands.addBand(newBand);
+        io.emit('active-bands', bands.getBands());
+    });
+
+    client.on('delete-band', (payload) => {
+        bands.deleteBand(payload.id);
+        io.emit('active-bands', bands.getBands());
+    });
+
 
 
 });

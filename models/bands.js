@@ -1,4 +1,4 @@
-
+const Band = require('../models/band')
 
 
 class Bands {
