@@ -21,10 +21,18 @@
             console.log('Desconectado del servidor');
         })
 
-        client.emit('message', {name : 'Miguel', last_name : 'Cauich'});
+        client.emit('message', { name: 'Miguel', last_name: 'Cauich' });
 
-         client.on('message', function (payload) {
+        client.on('message', function (payload) {
             console.log('Listening:', payload);
+        })
+
+        client.on('new-message', function (payload) {
+            console.log('New message:', payload);
+        });
+
+        client.on('active-bands', function (payload) {
+            console.log('Bandas activas:', payload);
         })
 
     </script>
